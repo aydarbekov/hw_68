@@ -4,7 +4,6 @@ from django.core.serializers import serialize, deserialize
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-
 @csrf_exempt
 def add_view(request, *args, **kwargs):
     if request.method == 'POST':
@@ -12,10 +11,10 @@ def add_view(request, *args, **kwargs):
             numbers = json.loads(request.body)
             first_number = numbers['A']
             second_number = numbers['B']
-            if type(first_number) == int and type(second_number) == int:
-                total = first_number + second_number
+            try:
+                total = int(first_number)+int(second_number)
                 return JsonResponse({'answer': total})
-            else:
+            except ValueError:
                 response = JsonResponse({'error': 'Need integer'})
                 response.status_code = 400
                 return response
@@ -32,10 +31,10 @@ def subtract_view(request, *args, **kwargs):
             numbers = json.loads(request.body)
             first_number = numbers['A']
             second_number = numbers['B']
-            if type(first_number) == int and type(second_number) == int:
-                total = first_number - second_number
+            try:
+                total = int(first_number) - int(second_number)
                 return JsonResponse({'answer': total})
-            else:
+            except ValueError:
                 response = JsonResponse({'error': 'Need integer'})
                 response.status_code = 400
                 return response
@@ -51,10 +50,10 @@ def multiply_view(request, *args, **kwargs):
             numbers = json.loads(request.body)
             first_number = numbers['A']
             second_number = numbers['B']
-            if type(first_number) == int and type(second_number) == int:
-                total = first_number * second_number
+            try:
+                total = int(first_number) * int(second_number)
                 return JsonResponse({'answer': total})
-            else:
+            except ValueError:
                 response = JsonResponse({'error': 'Need integer'})
                 response.status_code = 400
                 return response
@@ -70,10 +69,10 @@ def divide_view(request, *args, **kwargs):
             numbers = json.loads(request.body)
             first_number = numbers['A']
             second_number = numbers['B']
-            if type(first_number) == int and type(second_number) == int:
-                total = first_number / second_number
+            try:
+                total = int(first_number) / int(second_number)
                 return JsonResponse({'answer': total})
-            else:
+            except ValueError:
                 response = JsonResponse({'error': 'Need integer'})
                 response.status_code = 400
                 return response

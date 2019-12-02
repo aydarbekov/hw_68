@@ -9,23 +9,10 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container" id="container">
-        <label for="numberA">A:</label>
-        <input id="numberA" type="number" class="form-control mx-3">
-        <label for="numberB">B:</label>
-        <input id="numberB" type="number" class="form-control mx-3">
-        <br>
-        <button id="addBtn" class="btn btn-primary mr-1">+</button>
-        <button id="subtractBtn" class="btn btn-primary mr-1">-</button>
-        <button id="multiplyBtn" class="btn btn-primary mr-1">*</button>
-        <button id="divideBtn" class="btn btn-primary mr-1">/</button>
-        <p id="result" class="my-3"></p>
-    </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
-    {% load static %}
-    <script type="application/javascript" src="/static/js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

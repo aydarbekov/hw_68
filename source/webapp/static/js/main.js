@@ -1,31 +1,47 @@
-var baseURL = 'http://localhost:8000/';
+const body = $('body');
+let Div = $(document.createElement('div'));
+Div.addClass('container');
+Div.append('<label>A:<input id="numberA" type="number" class="form-control mx-3"></label>');
+Div.append('<label>B:<input id="numberB" type="number" class="form-control mx-3"></label><br>');
+Div.append('<button id="addBtn" class="btn btn-primary mr-1">+</button>');
+Div.append('<button id="subtractBtn" class="btn btn-primary mr-1">-</button>');
+Div.append('<button id="multiplyBtn" class="btn btn-primary mr-1">*</button>');
+Div.append('<button id="divideBtn" class="btn btn-primary mr-1">/</button>');
+Div.append('<p id="result" class="my-3"></p>');
+body.append(Div);
 
-var numberAInp = $('#numberA');
-var numberBInp = $('#numberB');
-var addBtn = $('#addBtn');
-var subtractBtn = $('#subtractBtn');
-var multiplyBtn = $('#multiplyBtn');
-var divideBtn = $('#divideBtn');
-var result = $('#result');
 
-var showResult = function (response) {
-    result.html(response);
-};
+let baseURL = 'http://localhost:8000/api/v1/';
 
-var calc = function(action) {
-    var numberA = numberAInp.val();
-    var numberB = numberBInp.val();
+let numberAInp = $('#numberA');
+let numberBInp = $('#numberB');
+let addBtn = $('#addBtn');
+let subtractBtn = $('#subtractBtn');
+let multiplyBtn = $('#multiplyBtn');
+let divideBtn = $('#divideBtn');
+let result = $('#result');
+
+
+function jqueryParseData (response, status) {
+    result.html(response['answer']);
+}
+
+function jqueryAjaxError(response, status) {
+    console.log(response);
+    console.log(status);
+    console.log('error');
+}
+
+let calc = function(action) {
+    let numberA = numberAInp.val();
+    let numberB = numberBInp.val();
     $.ajax({
         method: 'POST',
-        url: baseURL + action,
-        data: {a: numberA, b: numberB},
-        success: function (response) {
-            showResult(response);
-        },
-        error: function (error) {
-            $.alert(error);
-        }
-    });
+        url: baseURL + action + '/',
+        data: JSON.stringify({"A": numberA, "B": numberB}),
+        success: jqueryParseData,
+        error: jqueryAjaxError
+    })
 };
 
 addBtn.on('click', function () {
@@ -40,50 +56,3 @@ multiplyBtn.on('click', function () {
 divideBtn.on('click', function () {
     calc('divide');
 });
-
-
-
-
-//
-//
-// const indexLink = 'http://localhost:8000/add/';
-//
-// // $(document.createElement('div'))
-//
-// function renderData(data) {
-//         const container = $('.container');
-//     let countryDiv = $(document.createElement('div'));
-//     countryDiv.addClass('answer');
-//     // countryDiv.append(`<a href="index.html">Назад</a></br>`);
-//     countryDiv.append(`<h1>${data.A}</h1></br>`);
-//     // countryDiv.append(`<img src="${data.flag}" alt="Флаг" style="height: 100px"><br><br>`);
-//     countryDiv.append(`Код: ${data.B}<br>`);
-//     // countryDiv.append(`Валюта: ${data.currencies[0]['code']}<br>`);
-//     // countryDiv.append(`Население: ${data.population}<br>`);
-// }
-//
-// function jqueryParseData (response, status) {
-//     console.log(response);
-//     console.log(status);
-//     renderData(response);
-// }
-//
-// function jqueryAjaxError(response, status) {
-//     console.log(response);
-//     console.log(status);
-//     console.log('error');
-// }
-//
-// function jqueryLoadIndex() {
-//     $.ajax({
-//         url: indexLink,
-//         method: 'POST',
-//         data: {"A": 1234, "B": 4567},
-//         success: jqueryParseData,
-//         error: jqueryAjaxError
-//     })
-// }
-//
-// $(document).ready(function () {
-//    data = jqueryLoadIndex();
-// });
